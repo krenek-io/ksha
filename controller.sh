@@ -13,9 +13,9 @@ LOCK_PODS=0
 LOG_FILE="${LOG_CURL:-/var/log/ksha.log}"
 touch $LOG_FILE 
 
-# ADVISOR
-if [ -z "$ADVISOR" ]; then
-  echo "[ERROR] \$ADVISOR required environment"
+# CUSTOM METRIC SCRIPT
+if [ -z "$METRIC_SCRIPT" ]; then
+  echo "[ERROR] \$METRIC_SCRIPT required environment"
   exit
 fi
 
@@ -31,7 +31,7 @@ INTERVAL_CONTROLLER="${INTERVAL_CONTROLLER:-60}"
 
 while [ 0 ]; do
 x=0;
-CURRENT_VALUE=`bash ./metrics.d/$ADVISOR.sh`
+CURRENT_VALUE=`bash ./metrics.d/$METRIC_SCRIPT.sh`
 
   while [ $x != ${#CONDITIONS[@]} ]; do
 

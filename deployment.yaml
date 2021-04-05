@@ -59,7 +59,7 @@ spec:
           value: "YYY"
         - name: REDIS_CLUSTER
           value: "cluster-001"
-        - name: ADVISOR
+        - name: METRIC_SCRIPT
           value: "aws-elasticache-curritens" 
         - name: CONDITIONS
           value: "0=1 1000=2 2000=3 3000=4 4100=5 9000=10"
