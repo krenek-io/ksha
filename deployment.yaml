@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ksha-controller
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: cr-ksha-controller
+rules:
+- apiGroups: ["apps"]
+  resources:
+    - "deployments"
+  verbs: ["patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: crb-ksha-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cr-ksha-controller
+subjects:
+- kind: ServiceAccount
+  name: ksha-controller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ksha-aws-cw-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ksha-aws-cw-controller
+  template:
+    metadata:
+      labels:
+        app: ksha-aws-cw-controller
+    spec:
+      serviceAccountName: ksha-controller
+      containers:
+      - name: ksha-aws-cw-controller
+        image: krenek/ksha:eks
+        env:
+        - name: ACTIVE_SCALE
+          value: "true"
+        - name: NAMESPACE
+          value: "workers-testing"
+        - name: DEPLOYMENT
+          value: "deployment-sidekiq"
+        - name: AWS_DEFAULT_REGION
+          value: "us-east-1"
+        - name: AWS_ACCESS_KEY_ID
+          value: "XXX"
+        - name: AWS_SECRET_ACCESS_KEY
+          value: "YYY"
+        - name: REDIS_CLUSTER
+          value: "cluster-001"
+        - name: METRIC_SCRIPT
+          value: "aws-elasticache-curritens" 
+        - name: CONDITIONS
+          value: "0=1 1000=2 2000=3 3000=4 4100=5 9000=10"
