@@ -3,7 +3,7 @@ Simple Kubernetes Shell Script Autoscaler
 
 O KSHA (Kubernetes Shell Script Autoscaler) é uma prova de conceito para autoscaling baseado em métricas ("event-driven") para kubernetes, o controlador foi desenvolvido em shell script com base no princípio KISS e a idéia principal é escalar containers no Kubernetes com maior simplicidade possível.
 
-![ksha](https://user-images.githubusercontent.com/4332906/113611302-b388ad00-9624-11eb-8131-190c83cdf7ae.png)
+![ksha](https://user-images.githubusercontent.com/4332906/113637428-f2315e00-964a-11eb-9016-ebd39d73cb6c.png)
 
 *O controlador é baseado em três sessões:*
 
